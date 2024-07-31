@@ -2,45 +2,32 @@ package com.example.bookstore.common.request_callback
 
 import android.content.Context
 import android.util.Log
-import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.bookstore.action.impl.RecyclerActionImpl
-import com.example.bookstore.adapter.RecyclerAdapter
-import com.example.bookstore.api.res.BookSearch
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RetrofitCallBack(
+abstract class RetrofitCallBack<T>(
     val context: Context,
-    val view: View,
-    val fragment: Int,
-    val api: Call<BookSearch>
+    val api: Call<T>
 ) {
-    fun reqCallBack() {
-        GlobalScope.launch {
-            api.enqueue(object : Callback<BookSearch> {
-                override fun onResponse(call: Call<BookSearch>, response: Response<BookSearch>) {
-                    val adapter =
-                        RecyclerAdapter(
-                            response.body()!!,
-                            RecyclerActionImpl(context),
-                            context
-                        )
 
-                    val rvHome = view.findViewById<RecyclerView>(fragment)
-                    rvHome.adapter = adapter
-                    rvHome.layoutManager = GridLayoutManager(
-                        context, 2, GridLayoutManager.VERTICAL,
-                        false
-                    )
+    abstract fun onResponseCustom(response: Response<T>)
+
+    open fun onFailureCustom(call: Call<T>, t: Throwable) {
+        Log.e("Error:::", "Error " + t.message)
+    }
+
+    fun run() {
+        GlobalScope.launch {
+            api.enqueue(object : Callback<T> {
+                override fun onResponse(call: Call<T>, response: Response<T>) {
+                    onResponseCustom(response)
                 }
 
-                override fun onFailure(call: Call<BookSearch>, t: Throwable) {
-                    Log.e("Error:::", "Error " + t.message)
+                override fun onFailure(call: Call<T>, t: Throwable) {
+                    onFailureCustom(call, t)
                 }
             })
         }

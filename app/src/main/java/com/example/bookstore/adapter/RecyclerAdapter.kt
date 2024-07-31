@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.bookstore.R
 import com.example.bookstore.action.IRecyclerAction
 import com.example.bookstore.api.res.BookSearch
+import com.example.bookstore.common.util.SetImageResource
 
 
 class RecyclerAdapter(
@@ -35,22 +36,15 @@ class RecyclerAdapter(
             this.findViewById<TextView>(R.id.txtBookName).text = bookSearch.books[position].title
             this.findViewById<TextView>(R.id.txtDescription).text =
                 bookSearch.books[position].subtitle
-            setImage(bookSearch.books[position].image, this.findViewById(R.id.imageBook))
+            SetImageResource().setImage(
+                context,
+                bookSearch.books[position].image,
+                this.findViewById(R.id.imageBook)
+            )
         }
 
         holder.itemView.setOnClickListener {
-            onClickItem.onClick(position)
+            onClickItem.onClick(bookSearch.books[position])
         }
-    }
-
-    private fun setImage(url: String, imageView: ImageView) {
-        Glide.with(context)
-            .load(url)
-//            .apply(
-//                RequestOptions()
-//                    .placeholder(R.drawable.placeholder_image) // Placeholder image
-//                    .error(R.drawable.error_image) // Error image in case of loading failure
-//            )
-            .into(imageView)
     }
 }
