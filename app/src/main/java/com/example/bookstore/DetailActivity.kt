@@ -27,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
                 RetrofitHelper.getInstance().create(ItBookApi::class.java).getByIsbn13(isbn13!!)
             api.enqueue(object : Callback<BookDetail> {
                 override fun onResponse(call: Call<BookDetail>, response: Response<BookDetail>) {
-                    if (response?.body() != null) {
+                    response.run {
                         val book: BookDetail = response.body()!!
 
                         val image: ImageView = findViewById(R.id.imageView)
@@ -36,8 +36,8 @@ class DetailActivity : AppCompatActivity() {
                         val txtPriceVal = findViewById<TextView>(R.id.txtPriceVal)
                         txtPriceVal.text = book.price
 
-//                        val txtRatingVal = findViewById<TextView>(R.id.txtRatingVal)
-//                        txtRatingVal.text = book.rating
+                        //                        val txtRatingVal = findViewById<TextView>(R.id.txtRatingVal)
+                        //                        txtRatingVal.text = book.rating
 
                         val txtAuthVal = findViewById<TextView>(R.id.txtAuthVal)
                         txtAuthVal.text = book.authors
