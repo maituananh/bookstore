@@ -11,7 +11,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_grid_view)
         binding = ActivityHomeGridViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

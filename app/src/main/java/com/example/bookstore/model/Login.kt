@@ -1,8 +1,8 @@
 package com.example.bookstore.model
 
-data class Login(
+class Login(
+    val userId: Int,
     val username: String,
-    val password: String
+    val token: String
 ) {
-
 }

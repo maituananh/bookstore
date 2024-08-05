@@ -14,7 +14,7 @@ import com.example.bookstore.api.ItBookApi
 import com.example.bookstore.api.response.BookSearchRes
 import com.example.bookstore.common.request_callback.RetrofitCallBack
 import com.example.bookstore.databinding.FragmentSearchBinding
-import com.example.bookstore.retrofit.RetrofitHelper
+import com.example.bookstore.di.RetrofitModule
 import retrofit2.Response
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
@@ -45,25 +45,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun eventSearch(query: String) {
-        object :
-            RetrofitCallBack<BookSearchRes>(
-                RetrofitHelper.getInstance().create(ItBookApi::class.java).search(query)
-            ) {
-            override fun onResponseCustom(response: Response<BookSearchRes>) {
-                val adapter =
-                    RecyclerAdapter(
-                        response.body()!!.toBookList(),
-                        RecyclerActionImpl(requireContext())
-                    )
-
-                binding.rvFragmentSearch.run {
-                    this.adapter = adapter
-                    this.layoutManager = GridLayoutManager(
-                        context, 2, GridLayoutManager.VERTICAL,
-                        false
-                    )
-                }
-            }
-        }.run()
+//        object :
+//            RetrofitCallBack<BookSearchRes>(
+//                RetrofitModule.getInstance().create(ItBookApi::class.java).search(query)
+//            ) {
+//            override fun onResponseCustom(response: Response<BookSearchRes>) {
+//                val adapter =
+//                    RecyclerAdapter(
+//                        response.body()!!.toBookList(),
+//                        RecyclerActionImpl(requireContext())
+//                    )
+//
+//                binding.rvFragmentSearch.run {
+//                    this.adapter = adapter
+//                    this.layoutManager = GridLayoutManager(
+//                        context, 2, GridLayoutManager.VERTICAL,
+//                        false
+//                    )
+//                }
+//            }
+//        }.run()
     }
 }

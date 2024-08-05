@@ -12,7 +12,9 @@ import com.example.bookstore.action.impl.RecyclerActionImpl
 import com.example.bookstore.adapter.RecyclerAdapter
 import com.example.bookstore.databinding.FragmentHomeBinding
 import com.example.bookstore.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var binding: FragmentHomeBinding

@@ -7,7 +7,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookstore.databinding.ActivityMainBinding
 import com.example.bookstore.ui.login.view_model.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val loginViewModel: LoginViewModel by viewModels<LoginViewModel>()
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.btnLogin.text = "Login Book App"
         binding.btnLogin.setOnClickListener(handleLogin())
 
