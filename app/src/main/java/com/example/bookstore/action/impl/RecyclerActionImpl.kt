@@ -5,7 +5,7 @@ import android.content.Intent
 import android.widget.Toast
 import com.example.bookstore.DetailActivity
 import com.example.bookstore.action.IRecyclerAction
-import com.example.bookstore.api.res.Book
+import com.example.bookstore.model.Book
 
 class RecyclerActionImpl(val context: Context) : IRecyclerAction {
     override fun onClick(position: Int) {

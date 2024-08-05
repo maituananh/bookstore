@@ -1,7 +1,6 @@
-package com.example.bookstore.api.res
+package com.example.bookstore.model
 
-data class BookDetail(
-    val error: Int,
+class BookDetail(
     val title: String,
     val subtitle: String,
     val authors: String,

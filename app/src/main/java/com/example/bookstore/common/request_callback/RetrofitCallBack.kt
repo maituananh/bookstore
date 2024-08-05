@@ -1,6 +1,5 @@
 package com.example.bookstore.common.request_callback
 
-import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -9,7 +8,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 abstract class RetrofitCallBack<T>(
-    val context: Context,
     val api: Call<T>
 ) {
 

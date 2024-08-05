@@ -11,7 +11,7 @@ import com.example.bookstore.R
 import com.example.bookstore.action.impl.RecyclerActionImpl
 import com.example.bookstore.adapter.RecyclerAdapter
 import com.example.bookstore.api.ItBookApi
-import com.example.bookstore.api.res.BookSearch
+import com.example.bookstore.api.response.BookSearchRes
 import com.example.bookstore.common.request_callback.RetrofitCallBack
 import com.example.bookstore.databinding.FragmentSearchBinding
 import com.example.bookstore.retrofit.RetrofitHelper
@@ -46,16 +46,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun eventSearch(query: String) {
         object :
-            RetrofitCallBack<BookSearch>(
-                requireContext(),
+            RetrofitCallBack<BookSearchRes>(
                 RetrofitHelper.getInstance().create(ItBookApi::class.java).search(query)
             ) {
-            override fun onResponseCustom(response: Response<BookSearch>) {
+            override fun onResponseCustom(response: Response<BookSearchRes>) {
                 val adapter =
                     RecyclerAdapter(
-                        response.body()!!,
-                        RecyclerActionImpl(context),
-                        context
+                        response.body()!!.toBookList(),
+                        RecyclerActionImpl(requireContext())
                     )
 
                 binding.rvFragmentSearch.run {
