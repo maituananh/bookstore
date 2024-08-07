@@ -3,24 +3,28 @@ package com.example.bookstore.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.bookstore.model.Book
-import com.example.bookstore.service.BookService
+import com.example.domain.model.Book
+import com.example.domain.repository_interface.IBookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel: ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val provideBookService:
+    IBookRepository
+) : ViewModel() {
 
-    @Inject private lateinit var provideBookService: BookService
     private val _bookList = MutableLiveData<List<Book>>()
     val bookList: LiveData<List<Book>> = _bookList
 
     fun fetchBooks() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _bookList.value = provideBookService.findNew()
-        }
+//        viewModelScope.launch(Dispatchers.Main) {
+        _bookList.value = provideBookService.fetchNewBooks()
+
+//        }
+
     }
 }

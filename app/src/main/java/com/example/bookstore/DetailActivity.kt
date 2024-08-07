@@ -17,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val isbn13: String = intent.getStringExtra("isbn13") ?: "new"
+        val isbn13: String = intent.getStringExtra("isbn13") ?: ""
 
         bookDetailViewModel.findById(isbn13)
         bookDetailViewModel.bookDetail.observe(this) {

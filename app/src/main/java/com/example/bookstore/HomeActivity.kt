@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bookstore.adapter.PagerAdapter
 import com.example.bookstore.databinding.ActivityHomeGridViewBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeGridViewBinding
 

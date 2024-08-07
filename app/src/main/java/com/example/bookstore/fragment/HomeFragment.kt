@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var binding: FragmentHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels<HomeViewModel>()
+    val viewModel: HomeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +30,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        homeViewModel.fetchBooks()
+        viewModel.fetchBooks()
 
-        homeViewModel.bookList.observe(viewLifecycleOwner) {
+        viewModel.bookList.observe(viewLifecycleOwner) {
             binding.rvFragmentHome.adapter =
                 RecyclerAdapter(it, RecyclerActionImpl(requireContext()))
             binding.rvFragmentHome.layoutManager = GridLayoutManager(
