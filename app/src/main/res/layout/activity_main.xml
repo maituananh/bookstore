@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.bookstore.ui.login.view_model.LoginViewModel" />
+            type="com.example.bookstore.view_model.LoginViewModel" />
     </data>
 
     <LinearLayout
