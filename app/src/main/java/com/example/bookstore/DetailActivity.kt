@@ -5,8 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookstore.common.util.SetImageResource
 import com.example.bookstore.databinding.ActivityDetailBinding
-import com.example.bookstore.ui.detail.BookDetailViewModel
+import com.example.bookstore.view_model.BookDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding

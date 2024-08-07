@@ -7,9 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookstore.R
 import com.example.bookstore.action.IRecyclerAction
-import com.example.bookstore.api.response.BookSearchRes
 import com.example.bookstore.common.util.SetImageResource
-import com.example.bookstore.model.Book
+import com.example.domain.model.book.Book
 
 
 class RecyclerAdapter(
