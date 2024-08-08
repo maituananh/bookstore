@@ -1,8 +1,13 @@
 package com.example.data.di
 
+import com.example.data.database.dao.JobDao
+import com.example.data.network.setting.CalenderApi
+import com.example.data.network.setting.ItBookApi
 import com.example.data.repository.BookRepository
+import com.example.data.repository.CalendarRepository
 import com.example.data.repository.UserRepository
 import com.example.domain.i_repository.IBookRepository
+import com.example.domain.i_repository.ICalendarRepository
 import com.example.domain.i_repository.IUserRepository
 import dagger.Module
 import dagger.Provides
@@ -17,8 +22,16 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideBookRepository(provideRetrofit: Retrofit): IBookRepository =
+    fun provideBookRepository(@ItBookApi provideRetrofit: Retrofit): IBookRepository =
         BookRepository(provideRetrofit)
+
+    @Provides
+    @Singleton
+    fun provideCalendarRepository(
+        @CalenderApi provideCalendarRetrofit: Retrofit,
+        providesJobDao: JobDao
+    ): ICalendarRepository =
+        CalendarRepository(provideCalendarRetrofit, providesJobDao)
 
     @Provides
     @Singleton

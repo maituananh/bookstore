@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val provideBookRepository: IBookRepository) :
+class HomeViewModel @Inject constructor(private val iBookRepository: IBookRepository) :
     ViewModel() {
 
     private val _bookList = MutableLiveData<List<Book>>()
@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(private val provideBookRepository: IBook
 
     fun fetchBooks() {
         viewModelScope.launch(Dispatchers.Main) {
-            _bookList.value = provideBookRepository.findNewBooks()
+            _bookList.value = iBookRepository.findNewBooks()
         }
     }
 }
