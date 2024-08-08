@@ -2,8 +2,8 @@ package com.example.bookstore.action
 
 import com.example.domain.model.book.Book
 
-interface IRecyclerAction {
+interface IRecyclerAction<T> {
     fun onClick(position: Int)
 
-    fun onClick(book: Book)
+    fun onClick(book: T)
 }
