@@ -20,13 +20,9 @@ class HomeActivity : AppCompatActivity() {
 
         TabLayoutMediator(binding.tlMenu, binding.vp2) { tab, position ->
             when (position) {
-                0 -> {
-                    tab.text = "Home"
-                }
-
-                else -> {
-                    tab.text = "Search"
-                }
+                0 -> tab.text = "Home"
+                1 -> tab.text = "Search"
+                else -> tab.text = "Calendar"
             }
         }.attach()
 
