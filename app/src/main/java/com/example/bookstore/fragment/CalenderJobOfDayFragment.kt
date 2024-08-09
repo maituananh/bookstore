@@ -4,27 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bookstore.R
 import com.example.bookstore.action.IRecyclerAction
 import com.example.bookstore.adapter.RecyclerAdapter
-import com.example.bookstore.databinding.FragmentCalendarOfWeekBinding
+import com.example.bookstore.databinding.FragmentCalenderJobOfDayBinding
 import com.example.domain.model.calendar.Calendar
 
-
-class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
+class CalenderJobOfDayFragment : Fragment(R.layout.fragment_calender_job_of_day),
     IRecyclerAction<Calendar> {
 
-    private lateinit var binding: FragmentCalendarOfWeekBinding
+    private lateinit var binding: FragmentCalenderJobOfDayBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCalendarOfWeekBinding.inflate(inflater, container, false)
+        binding = FragmentCalenderJobOfDayBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,15 +31,10 @@ class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
             RecyclerAdapter(
                 arrayListOf(
                     Calendar(),
-                    Calendar(),
-                    Calendar(),
-                    Calendar(),
-                    Calendar(),
-                    Calendar(),
                     Calendar()
                 ),
                 this,
-                R.layout.layout_day_of_week,
+                R.layout.layout_job_of_day,
             )
 
         binding.rvFragmentCalendar.layoutManager = GridLayoutManager(
@@ -59,14 +52,6 @@ class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
         position: Int,
         data: List<Calendar>
     ) {
-        this.getChildFragmentManager()
-            .beginTransaction()
-            .replace(
-                holder.itemView.findViewById<FrameLayout>(R.id.replace_by_fragment_job_of_day).id,
-                CalenderJobOfDayFragment()
-            )
-            .commit()
-        Toast.makeText(requireContext(), "Day of week", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Job of day", Toast.LENGTH_SHORT).show()
     }
-
 }
