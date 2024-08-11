@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_day_of_week"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:background="@drawable/border_color"
@@ -41,12 +42,10 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@+id/replace_by_fragment_job_of_day"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvJob"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </FrameLayout>
-
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

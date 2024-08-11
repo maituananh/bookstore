@@ -8,7 +8,7 @@ import com.example.bookstore.action.IRecyclerAction
 
 class RecyclerAdapter<T>(
     private val data: List<T>,
-    private val action: IRecyclerAction<T>,
+    private val action: IRecyclerAction<T>?,
     private val layoutItem: Int,
 ) : RecyclerView.Adapter<RecyclerAdapter<T>.ViewHolder>() {
 
@@ -24,10 +24,10 @@ class RecyclerAdapter<T>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        action.bindingDataToItemLayout(holder, position, data)
+        action?.bindingDataToItemLayout(holder, position, data)
 
         holder.itemView.setOnClickListener {
-            action.onClick(data[position])
+            action?.onClick(data[position])
         }
     }
 }
