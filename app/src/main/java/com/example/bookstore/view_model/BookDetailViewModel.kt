@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookDetailViewModel @Inject constructor(private val iBookRepository: IBookRepository) : ViewModel() {
+class BookDetailViewModel @Inject constructor(private val iBookRepository: IBookRepository) :
+    ViewModel() {
     private val _bookDetail = MutableLiveData<BookDetail>()
     val bookDetail: LiveData<BookDetail> = _bookDetail
 
