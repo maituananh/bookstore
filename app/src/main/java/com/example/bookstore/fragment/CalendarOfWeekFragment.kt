@@ -1,5 +1,6 @@
 package com.example.bookstore.fragment
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookstore.R
 import com.example.bookstore.action.IRecyclerAction
 import com.example.bookstore.adapter.RecyclerAdapter
+import com.example.bookstore.common.util.colorList
 import com.example.bookstore.databinding.FragmentCalendarOfWeekBinding
 import com.example.bookstore.fragment.action.ActionInJobOfDay
 import com.example.bookstore.fragment.action.ItemTouchListener
@@ -25,6 +27,10 @@ import com.example.bookstore.view_model.CalendarOfWeekViewModel
 import com.example.domain.model.calendar.Calendar
 import com.example.domain.model.calendar.Job
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
@@ -32,6 +38,11 @@ class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
 
     private lateinit var binding: FragmentCalendarOfWeekBinding
     private val calendarViewModel: CalendarOfWeekViewModel by viewModels<CalendarOfWeekViewModel>()
+
+    private var llDayOfWeek: LinearLayout? = null
+    private var rvJob: RecyclerView? = null
+    private var txtDayOfWeek: TextView? = null
+    private var txtDayOfMonth: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,30 +75,27 @@ class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
         position: Int,
         data: List<Calendar>
     ) {
-        resizeLinearLayoutDayOfWeek(holder, data[position].jobs)
+        llDayOfWeek = holder.itemView.findViewById(R.id.ll_day_of_week)
+        rvJob = holder.itemView.findViewById(R.id.rvJob)
+        txtDayOfWeek = holder.itemView.findViewById(R.id.txt_day_of_week)
+        txtDayOfMonth = holder.itemView.findViewById(R.id.txt_day_of_month)
 
-        val txtDayOfWeek: TextView = holder.itemView.findViewById(R.id.txt_day_of_week)
-        val txtDayOfMonth: TextView = holder.itemView.findViewById(R.id.txt_day_of_month)
+        CoroutineScope(Dispatchers.Main).launch {
+            setTextAndColorForDayOfWeekAndOfMonth(data[position])
+            attachJobOfDayLayout(position, data)
+        }
 
-        txtDayOfWeek.text = data[position].date.dayOfWeek.toString().substring(0, 3)
-        txtDayOfMonth.text = data[position].date.dayOfMonth.toString()
-
-        attachJobOfDayLayout(holder, position, data)
+        resizeLinearLayoutDayOfWeek(data[position].jobs)
     }
 
-    private fun attachJobOfDayLayout(
-        holder: RecyclerAdapter<Calendar>.ViewHolder,
-        position: Int,
-        data: List<Calendar>
-    ) {
-        val rvJob: RecyclerView = holder.itemView.findViewById(R.id.rvJob)
+    private fun attachJobOfDayLayout(position: Int, data: List<Calendar>) {
         val linearLayoutManager = LinearLayoutManager(
-            rvJob.context,
+            rvJob!!.context,
             LinearLayoutManager.VERTICAL,
             false
         )
 
-        rvJob.apply {
+        rvJob!!.apply {
             adapter =
                 RecyclerAdapter(
                     data[position].jobs,
@@ -100,17 +108,21 @@ class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week),
         }
     }
 
-    private fun resizeLinearLayoutDayOfWeek(
-        holder: RecyclerAdapter<Calendar>.ViewHolder,
-        jobData: List<Job>
-    ) {
+    private fun resizeLinearLayoutDayOfWeek(jobData: List<Job>) {
         if (jobData.size > 1) {
-            val llDayOfWeek: LinearLayout = holder.itemView.findViewById(R.id.ll_day_of_week)
-            llDayOfWeek.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 700)
-            return
+            llDayOfWeek!!.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 610)
         }
+    }
 
-        val llDayOfWeek: LinearLayout = holder.itemView.findViewById(R.id.ll_day_of_week)
-        llDayOfWeek.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 370)
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setTextAndColorForDayOfWeekAndOfMonth(calendar: Calendar) {
+        txtDayOfWeek!!.text = calendar.date.dayOfWeek.toString().substring(0, 3)
+        txtDayOfMonth!!.text = calendar.date.dayOfMonth.toString()
+
+        if (calendar.date.isEqual(LocalDate.now())) {
+            txtDayOfWeek!!.setTextColor(requireContext().colorList(R.color.c_7470ef))
+            txtDayOfMonth!!.setTextColor(requireContext().colorList(R.color.c_7470ef))
+        }
     }
 }

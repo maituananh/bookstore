@@ -4,20 +4,31 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import com.example.bookstore.R
 import com.example.bookstore.action.IRecyclerAction
 import com.example.bookstore.adapter.RecyclerAdapter
-import com.example.domain.model.calendar.Calendar
+import com.example.bookstore.common.util.colorList
 import com.example.domain.model.calendar.Job
+import com.example.domain.model.calendar.JobStatus
+import java.util.Locale
 
 
 class ActionInJobOfDay(
 //    private val parentHolder: RecyclerAdapter<Calendar>.ViewHolder,
     private val context: Context
 ) : IRecyclerAction<Job> {
+
+    private var imgTickCompleted: ImageView? = null
+    private var txtExercise: TextView? = null
+    private var txtStatus: TextView? = null
+    private var cvJob: CardView? = null
+    private var ivDot: ImageView? = null
+
+    private var txtJobName: TextView? = null
+
     override fun onClick(t: Job) {
         println("ActionInJobOfDay")
     }
@@ -27,25 +38,70 @@ class ActionInJobOfDay(
         position: Int,
         data: List<Job>
     ) {
-        val txtStatus = holder.itemView.findViewById<TextView>(R.id.txt_status)
-        val txtExerciseNumber = holder.itemView.findViewById<TextView>(R.id.txt_exercise_number)
-        val txtJobName = holder.itemView.findViewById<TextView>(R.id.txt_job_name)
+        cvJob = holder.itemView.findViewById(R.id.cv_job)
 
-        txtStatus.text =
-            data[position].status.toString().substring(0, 1) + data[position].status.toString()
-                .substring(1, data[position].status.toString().length).toLowerCase()
-        txtJobName.text = data[position].name
+        imgTickCompleted = holder.itemView.findViewById(R.id.img_tick_completed)
+        imgTickCompleted!!.setOnClickListener(onClickCompleteJob(holder, imgTickCompleted!!))
 
-        if (data.size == 1) {
-            txtExerciseNumber.text = data[position].exercises.toString() + " exercise"
-        } else if (data.size == 0) {
-            txtExerciseNumber.text = ""
+        txtExercise = holder.itemView.findViewById(R.id.txt_exercise_number)
+        txtStatus = holder.itemView.findViewById(R.id.txt_status)
+
+        ivDot = holder.itemView.findViewById(R.id.iv_dot)
+
+        txtJobName = holder.itemView.findViewById(R.id.txt_job_name)
+
+        setDataInJob(holder, position, data)
+        setColorInStatus(holder, data[position])
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun setColorInStatus(holder: RecyclerAdapter<Job>.ViewHolder, job: Job) {
+
+        when (job.status) {
+            JobStatus.MISSED -> {
+                cvJob!!.setCardBackgroundColor(context.colorList(R.color.c_f7f8fc))
+                txtStatus!!.setTextColor(context.colorList(R.color.red))
+            }
+
+            JobStatus.COMPLETED -> {
+                cvJob!!.setCardBackgroundColor(context.colorList(R.color.c_7470ef))
+                setColorForTextJob(holder, R.color.white)
+
+                txtExercise!!.isVisible = false
+                ivDot!!.isVisible = false
+
+                imgTickCompleted!!.apply {
+                    setOnClickListener(null)
+                    isClickable = false
+                }
+            }
+
+            else -> setColorForTextJob(holder, R.color.silver)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setDataInJob(
+        holder: RecyclerAdapter<Job>.ViewHolder,
+        position: Int,
+        jobs: List<Job>
+    ) {
+        txtJobName!!.text = jobs[position].name
+
+        val status = jobs[position].status
+        if (status != JobStatus.ASSIGNED) {
+            txtStatus!!.text =
+                status.name.substring(0, 1) + status.name.substring(1, status.name.length)
+                    .lowercase(Locale.ROOT)
         } else {
-            txtExerciseNumber.text = data[position].exercises.toString() + " exercises"
+            ivDot!!.isVisible = false
         }
 
-        val imgTickCompleted = holder.itemView.findViewById<ImageView>(R.id.img_tick_completed)
-        imgTickCompleted.setOnClickListener(onClickCompleteJob(holder, imgTickCompleted))
+        when (jobs.size) {
+            0 -> txtExercise!!.text = ""
+            1 -> txtExercise!!.text = jobs[position].exercises.toString() + " exercise"
+            else -> txtExercise!!.text = jobs[position].exercises.toString() + " exercises"
+        }
     }
 
     @SuppressLint("ResourceAsColor")
@@ -58,14 +114,9 @@ class ActionInJobOfDay(
         }
     }
 
-    private fun layoutJobCompleted(holder: RecyclerAdapter<Calendar>.ViewHolder) {
-        val llJobOfDay = holder.itemView.findViewById<LinearLayout>(R.id.ll_job_of_day)
-        llJobOfDay.setBackgroundColor(ContextCompat.getColor(context, R.color.c_7470ef))
-
-        val txtJobName = holder.itemView.findViewById<TextView>(R.id.txt_job_name)
-        llJobOfDay.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-
-        val txtStatus = holder.itemView.findViewById<TextView>(R.id.txt_status)
-        llJobOfDay.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+    private fun setColorForTextJob(holder: RecyclerAdapter<Job>.ViewHolder, color: Int) {
+        txtJobName!!.setTextColor(context.colorList(color))
+        txtStatus!!.setTextColor(context.colorList(color))
+        txtExercise!!.setTextColor(context.colorList(color))
     }
 }

@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface CalendarServer {
 
-    @GET("c/5ecf-c56d-4d63-8a56")
+    @GET("c/2126-f485-4bb6-b447")
     suspend fun fetchCalendar():  Response<List<CalendarRes>>
 }
