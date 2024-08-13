@@ -23,6 +23,6 @@ data class JobRes(
             JobStatusRes.Assigned -> JobStatus.ASSIGNED
         }
 
-        return Job(id, name, jobStatus, exercises, 0)
+        return Job(id, name, jobStatus, exercises, false)
     }
 }

@@ -1,8 +1,5 @@
 package com.example.data.di
 
-import android.content.Context
-import androidx.room.Room
-import com.example.data.database.CalendarDatabase
 import com.example.data.database.dao.JobDao
 import com.example.data.network.setting.CalenderApi
 import com.example.data.network.setting.ItBookApi
@@ -39,12 +36,4 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideUserRepository(): IUserRepository = UserRepository()
-
-    @Provides
-    fun providesCalendarDatabase(context: Context): CalendarDatabase =
-        Room.databaseBuilder(context, CalendarDatabase::class.java, "calendar")
-            .allowMainThreadQueries().build()
-
-    @Provides
-    fun providesJobDao(database: CalendarDatabase): JobDao = database.jobDao()
 }

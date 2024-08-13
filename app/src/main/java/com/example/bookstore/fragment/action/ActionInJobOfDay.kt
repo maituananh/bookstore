@@ -11,15 +11,20 @@ import com.example.bookstore.R
 import com.example.bookstore.action.IRecyclerAction
 import com.example.bookstore.adapter.RecyclerAdapter
 import com.example.bookstore.common.util.colorList
+import com.example.bookstore.view_model.CalendarOfWeekViewModel
 import com.example.domain.model.calendar.Job
 import com.example.domain.model.calendar.JobStatus
 import java.util.Locale
 
 
-class ActionInJobOfDay(
+class ActionInJobOfDay
+    (
 //    private val parentHolder: RecyclerAdapter<Calendar>.ViewHolder,
-    private val context: Context
+    private val context: Context,
+    private val calendarViewModel: CalendarOfWeekViewModel
 ) : IRecyclerAction<Job> {
+
+    private var isSelected: Boolean = false
 
     private var imgTickCompleted: ImageView? = null
     private var txtExercise: TextView? = null
@@ -41,7 +46,12 @@ class ActionInJobOfDay(
         cvJob = holder.itemView.findViewById(R.id.cv_job)
 
         imgTickCompleted = holder.itemView.findViewById(R.id.img_tick_completed)
-        imgTickCompleted!!.setOnClickListener(onClickCompleteJob(holder, imgTickCompleted!!))
+        imgTickCompleted!!.setOnClickListener(
+            onClickCompleteJob(
+                imgTickCompleted!!,
+                data[position]
+            )
+        )
 
         txtExercise = holder.itemView.findViewById(R.id.txt_exercise_number)
         txtStatus = holder.itemView.findViewById(R.id.txt_status)
@@ -50,7 +60,8 @@ class ActionInJobOfDay(
 
         txtJobName = holder.itemView.findViewById(R.id.txt_job_name)
 
-        setDataInJob(holder, position, data)
+        setDataInJob(position, data)
+        setIconCompleted(data[position])
         setColorInStatus(holder, data[position])
     }
 
@@ -71,6 +82,7 @@ class ActionInJobOfDay(
                 ivDot!!.isVisible = false
 
                 imgTickCompleted!!.apply {
+                    setImageResource(R.drawable.completed_icon)
                     setOnClickListener(null)
                     isClickable = false
                 }
@@ -82,7 +94,6 @@ class ActionInJobOfDay(
 
     @SuppressLint("SetTextI18n")
     private fun setDataInJob(
-        holder: RecyclerAdapter<Job>.ViewHolder,
         position: Int,
         jobs: List<Job>
     ) {
@@ -106,12 +117,30 @@ class ActionInJobOfDay(
 
     @SuppressLint("ResourceAsColor")
     private fun onClickCompleteJob(
-        holder: RecyclerAdapter<Job>.ViewHolder,
-        imgView: ImageView
+        imgView: ImageView,
+        job: Job
     ): View.OnClickListener {
         return View.OnClickListener {
-            imgView.setImageResource(R.drawable.completed_icon_purple)
+            isSelected = imgView.tag.toString().toBooleanStrict()
+            if (!isSelected) {
+                imgView.setImageResource(R.drawable.completed_icon_purple)
+            } else {
+                imgView.setImageResource(R.drawable.completed_icon)
+            }
+            imgView.tag = !isSelected
+
+            job.isSelected = !isSelected
+            calendarViewModel.updateIsSelected(job)
         }
+    }
+
+    private fun setIconCompleted(job: Job) {
+        if (job.isSelected) {
+            imgTickCompleted!!.setImageResource(R.drawable.completed_icon_purple)
+        } else {
+            imgTickCompleted!!.setImageResource(R.drawable.completed_icon)
+        }
+        imgTickCompleted!!.tag = job.isSelected
     }
 
     private fun setColorForTextJob(holder: RecyclerAdapter<Job>.ViewHolder, color: Int) {

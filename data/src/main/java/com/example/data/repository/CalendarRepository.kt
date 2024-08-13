@@ -9,6 +9,8 @@ import com.example.data.network.setting.CalenderApi
 import com.example.domain.i_repository.ICalendarRepository
 import com.example.domain.model.calendar.Calendar
 import com.example.domain.model.calendar.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -19,7 +21,7 @@ class CalendarRepository
 ) : ICalendarRepository {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override suspend fun findCalendar(): List<Calendar> {
+    override suspend fun findCalendar(): Flow<List<Calendar>> = flow {
         val calendarListRes: List<Calendar> =
             provideRetrofit.create(CalendarServer::class.java).fetchCalendar().body()!!
                 .map { it.toCalendar() }
@@ -32,10 +34,26 @@ class CalendarRepository
             if (jobMap.get(it.id) != null) {
                 it.isSelected = jobMap.get(it.id)!!.isSelected
             } else {
-                it.isSelected = 0
+                it.isSelected = false
             }
         }
 
-        return calendarListRes
+        emit(calendarListRes)
+    }
+
+
+    override suspend fun insertJobToDB(job: Job) {
+        val jobEntity = JobEntity(null, job.id, true)
+        providesJobDao.insertJob(jobEntity)
+    }
+
+    override suspend fun updateIsSelected(job: Job) {
+        val jobEntity = providesJobDao.getJobById(job.id)
+
+        if (jobEntity == null) {
+            providesJobDao.insertJob(JobEntity(null, job.id, true))
+        } else {
+            providesJobDao.updateJob(JobEntity(jobEntity.id, job.id, job.isSelected))
+        }
     }
 }
