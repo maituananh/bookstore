@@ -5,6 +5,6 @@ class Job(
     val name: String,
     val status: JobStatus,
     val exercises: Int,
-    var isSelected: Int = 0
+    var isSelected: Boolean = false
 ) {
 }
