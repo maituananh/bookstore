@@ -1,4 +1,4 @@
-package com.example.data.network.response
+package com.example.data.network.response.book
 
 import com.example.domain.model.book.Book
 import com.squareup.moshi.Json

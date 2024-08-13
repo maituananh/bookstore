@@ -5,6 +5,6 @@ import java.time.LocalDate
 class Calendar (
     val date: LocalDate,
     val day: Int,
-    val jobs: List<Job>
+    val jobs: List<Job>,
 ) {
 }

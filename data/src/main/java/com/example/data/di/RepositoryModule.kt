@@ -1,5 +1,9 @@
 package com.example.data.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.data.database.CalendarDatabase
+import com.example.data.database.dao.JobDao
 import com.example.data.network.setting.CalenderApi
 import com.example.data.network.setting.ItBookApi
 import com.example.data.repository.BookRepository
@@ -26,10 +30,21 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCalendarRepository(@CalenderApi provideCalendarRetrofit: Retrofit): ICalendarRepository =
-        CalendarRepository(provideCalendarRetrofit)
+    fun provideCalendarRepository(
+        @CalenderApi provideCalendarRetrofit: Retrofit,
+        providesJobDao: JobDao
+    ): ICalendarRepository =
+        CalendarRepository(provideCalendarRetrofit, providesJobDao)
 
     @Provides
     @Singleton
     fun provideUserRepository(): IUserRepository = UserRepository()
+
+    @Provides
+    fun providesCalendarDatabase(context: Context): CalendarDatabase =
+        Room.databaseBuilder(context, CalendarDatabase::class.java, "calendar")
+            .allowMainThreadQueries().build()
+
+    @Provides
+    fun providesJobDao(database: CalendarDatabase): JobDao = database.jobDao()
 }

@@ -7,6 +7,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class JobRes(
+    @Json(name = "id")
+    var id: Int = 0,
     @Json(name = "name")
     val name: String,
     @Json(name = "status")
@@ -21,6 +23,6 @@ data class JobRes(
             JobStatusRes.Assigned -> JobStatus.ASSIGNED
         }
 
-        return Job(name, jobStatus, exercises)
+        return Job(id, name, jobStatus, exercises, 0)
     }
 }
