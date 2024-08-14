@@ -6,7 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookstore.databinding.ActivityMainBinding
-import com.example.bookstore.ui.login.view_model.LoginViewModel
+import com.example.bookstore.view_model.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

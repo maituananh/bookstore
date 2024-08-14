@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.bookstore.ui.login.view_model.LoginViewModel" />
+            type="com.example.bookstore.view_model.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="username"
+            android:text="admin"
             android:inputType="textEmailAddress"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />

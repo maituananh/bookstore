@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bookstore.adapter.PagerAdapter
 import com.example.bookstore.databinding.ActivityHomeGridViewBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeGridViewBinding
 
@@ -18,13 +20,9 @@ class HomeActivity : AppCompatActivity() {
 
         TabLayoutMediator(binding.tlMenu, binding.vp2) { tab, position ->
             when (position) {
-                0 -> {
-                    tab.text = "Home"
-                }
-
-                else -> {
-                    tab.text = "Search"
-                }
+                0 -> tab.text = "Home"
+                1 -> tab.text = "Search"
+                else -> tab.text = "Calendar"
             }
         }.attach()
 
