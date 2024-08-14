@@ -1,12 +1,12 @@
 package com.example.data.network
 
-import com.example.data.network.response.BookDetailRes
-import com.example.data.network.response.BookSearchRes
+import com.example.data.network.response.book.BookDetailRes
+import com.example.data.network.response.book.BookSearchRes
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ItBookApi {
+interface ItBookServer {
 
     @GET("new")
     suspend fun new():  Response<BookSearchRes>

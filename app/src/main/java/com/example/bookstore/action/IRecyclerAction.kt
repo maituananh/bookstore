@@ -1,9 +1,8 @@
 package com.example.bookstore.action
 
-import com.example.domain.model.book.Book
+import com.example.bookstore.adapter.RecyclerAdapter
 
-interface IRecyclerAction {
-    fun onClick(position: Int)
-
-    fun onClick(book: Book)
+interface IRecyclerAction<T> {
+    fun onClick(t: T)
+    fun bindingDataToItemLayout(holder: RecyclerAdapter<T>.ViewHolder, position: Int, data: List<T>)
 }
