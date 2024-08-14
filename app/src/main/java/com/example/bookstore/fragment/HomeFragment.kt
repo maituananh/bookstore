@@ -11,7 +11,7 @@ import com.example.bookstore.R
 import com.example.bookstore.action.impl.RecyclerActionImpl
 import com.example.bookstore.adapter.RecyclerAdapter
 import com.example.bookstore.databinding.FragmentHomeBinding
-import com.example.bookstore.ui.home.HomeViewModel
+import com.example.bookstore.view_model.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
