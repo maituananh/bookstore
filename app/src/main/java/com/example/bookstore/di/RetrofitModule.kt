@@ -1,4 +1,4 @@
-package com.example.data.di
+package com.example.bookstore.di
 
 import com.example.data.network.setting.CalenderApi
 import com.example.data.network.setting.ItBookApi

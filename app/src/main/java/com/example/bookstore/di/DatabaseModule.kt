@@ -1,4 +1,4 @@
-package com.example.data.di
+package com.example.bookstore.di
 
 import android.content.Context
 import androidx.room.Room
@@ -9,7 +9,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
 
 @Module
 @InstallIn(SingletonComponent::class)

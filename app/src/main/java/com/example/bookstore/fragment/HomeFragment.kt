@@ -22,6 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), IRecyclerAction<Book> {
 
+    companion object {
+        const val EXTRA_ISBN_1 = "isbn13"
+    }
+
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels<HomeViewModel>()
 
@@ -49,7 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), IRecyclerAction<Book> {
 
     override fun onClick(book: Book) {
         val intentActivity = Intent(context, DetailActivity::class.java)
-        intentActivity.putExtra("isbn13", book.isbn13)
+        intentActivity.putExtra(EXTRA_ISBN_1, book.isbn13)
         context?.startActivity(intentActivity)
     }
 
@@ -59,13 +63,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), IRecyclerAction<Book> {
         data: List<Book>
     ) {
         holder.itemView.apply {
-            this.findViewById<TextView>(R.id.txtBookName).text = data[position].title
-            this.findViewById<TextView>(R.id.txtDescription).text =
+            this.findViewById<TextView>(R.id.txt_book_name).text = data[position].title
+            this.findViewById<TextView>(R.id.txt_description).text =
                 data[position].subtitle
             SetImageResource().setImage(
                 context,
                 data[position].image,
-                this.findViewById(R.id.imageBook)
+                this.findViewById(R.id.image_book)
             )
         }
     }

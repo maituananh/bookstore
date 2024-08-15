@@ -14,7 +14,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageBook"
+                android:id="@+id/image_book"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -26,14 +26,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtBookName"
+                android:id="@+id/txt_book_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hello_blank_fragment"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/txtDescription"
+                android:id="@+id/txt_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hello_blank_fragment" />

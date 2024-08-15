@@ -1,4 +1,4 @@
-package com.example.data.di
+package com.example.bookstore.di
 
 import com.example.data.database.dao.JobDao
 import com.example.data.network.setting.CalenderApi

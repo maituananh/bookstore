@@ -17,22 +17,21 @@ import com.example.domain.model.calendar.JobStatus
 import java.util.Locale
 
 
-class ActionInJobOfDay
+class ActionOnJobOfDay
     (
-//    private val parentHolder: RecyclerAdapter<Calendar>.ViewHolder,
     private val context: Context,
     private val calendarViewModel: CalendarOfWeekViewModel
 ) : IRecyclerAction<Job> {
 
     private var isSelected: Boolean = false
 
-    private var imgTickCompleted: ImageView? = null
-    private var txtExercise: TextView? = null
-    private var txtStatus: TextView? = null
-    private var cvJob: CardView? = null
-    private var ivDot: ImageView? = null
+    private lateinit var imgTickCompleted: ImageView
+    private lateinit var txtExercise: TextView
+    private lateinit var txtStatus: TextView
+    private lateinit var cvJob: CardView
+    private lateinit var ivDot: ImageView
 
-    private var txtJobName: TextView? = null
+    private lateinit var txtJobName: TextView
 
     override fun onClick(t: Job) {
         println("ActionInJobOfDay")
@@ -46,11 +45,8 @@ class ActionInJobOfDay
         cvJob = holder.itemView.findViewById(R.id.cv_job)
 
         imgTickCompleted = holder.itemView.findViewById(R.id.img_tick_completed)
-        imgTickCompleted!!.setOnClickListener(
-            onClickCompleteJob(
-                imgTickCompleted!!,
-                data[position]
-            )
+        imgTickCompleted.setOnClickListener(
+            onClickCompleteJob(imgTickCompleted, data[position])
         )
 
         txtExercise = holder.itemView.findViewById(R.id.txt_exercise_number)
@@ -70,18 +66,18 @@ class ActionInJobOfDay
 
         when (job.status) {
             JobStatus.MISSED -> {
-                cvJob!!.setCardBackgroundColor(context.colorList(R.color.c_f7f8fc))
-                txtStatus!!.setTextColor(context.colorList(R.color.red))
+                cvJob.setCardBackgroundColor(context.colorList(R.color.c_f7f8fc))
+                txtStatus.setTextColor(context.colorList(R.color.red))
             }
 
             JobStatus.COMPLETED -> {
-                cvJob!!.setCardBackgroundColor(context.colorList(R.color.c_7470ef))
+                cvJob.setCardBackgroundColor(context.colorList(R.color.c_7470ef))
                 setColorForTextJob(holder, R.color.white)
 
-                txtExercise!!.isVisible = false
-                ivDot!!.isVisible = false
+                txtExercise.isVisible = false
+                ivDot.isVisible = false
 
-                imgTickCompleted!!.apply {
+                imgTickCompleted.apply {
                     setImageResource(R.drawable.completed_icon)
                     setOnClickListener(null)
                     isClickable = false
@@ -97,21 +93,21 @@ class ActionInJobOfDay
         position: Int,
         jobs: List<Job>
     ) {
-        txtJobName!!.text = jobs[position].name
+        txtJobName.text = jobs[position].name
 
         val status = jobs[position].status
         if (status != JobStatus.ASSIGNED) {
-            txtStatus!!.text =
+            txtStatus.text =
                 status.name.substring(0, 1) + status.name.substring(1, status.name.length)
                     .lowercase(Locale.ROOT)
         } else {
-            ivDot!!.isVisible = false
+            ivDot.isVisible = false
         }
 
         when (jobs.size) {
-            0 -> txtExercise!!.text = ""
-            1 -> txtExercise!!.text = jobs[position].exercises.toString() + " exercise"
-            else -> txtExercise!!.text = jobs[position].exercises.toString() + " exercises"
+            0 -> txtExercise.text = ""
+            1 -> txtExercise.text = "${jobs[position].exercises} exercise"
+            else -> txtExercise.text = "${jobs[position].exercises} exercises"
         }
     }
 
@@ -136,16 +132,16 @@ class ActionInJobOfDay
 
     private fun setIconCompleted(job: Job) {
         if (job.isSelected) {
-            imgTickCompleted!!.setImageResource(R.drawable.completed_icon_purple)
+            imgTickCompleted.setImageResource(R.drawable.completed_icon_purple)
         } else {
-            imgTickCompleted!!.setImageResource(R.drawable.completed_icon)
+            imgTickCompleted.setImageResource(R.drawable.completed_icon)
         }
-        imgTickCompleted!!.tag = job.isSelected
+        imgTickCompleted.tag = job.isSelected
     }
 
     private fun setColorForTextJob(holder: RecyclerAdapter<Job>.ViewHolder, color: Int) {
-        txtJobName!!.setTextColor(context.colorList(color))
-        txtStatus!!.setTextColor(context.colorList(color))
-        txtExercise!!.setTextColor(context.colorList(color))
+        txtJobName.setTextColor(context.colorList(color))
+        txtStatus.setTextColor(context.colorList(color))
+        txtExercise.setTextColor(context.colorList(color))
     }
 }

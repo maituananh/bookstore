@@ -49,7 +49,7 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvJob"
+                    android:id="@+id/rv_job"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
