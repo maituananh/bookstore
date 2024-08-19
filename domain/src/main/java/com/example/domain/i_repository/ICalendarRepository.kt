@@ -6,6 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ICalendarRepository {
     suspend fun findCalendar(): Flow<List<Calendar>>
-    suspend fun insertJobToDB(job: Job)
     suspend fun updateIsSelected(job: Job)
 }

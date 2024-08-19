@@ -51,4 +51,8 @@ class CalendarOfWeekFragment : Fragment(R.layout.fragment_calendar_of_week) {
             false
         )
     }
+
+    override fun toString(): String {
+        return "Calendar"
+    }
 }

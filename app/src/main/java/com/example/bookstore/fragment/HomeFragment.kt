@@ -19,12 +19,10 @@ import com.example.bookstore.view_model.HomeViewModel
 import com.example.domain.model.book.Book
 import dagger.hilt.android.AndroidEntryPoint
 
+const val EXTRA_ISBN_1 = "isbn13"
+
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), IRecyclerAction<Book> {
-
-    companion object {
-        const val EXTRA_ISBN_1 = "isbn13"
-    }
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels<HomeViewModel>()
@@ -74,4 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), IRecyclerAction<Book> {
         }
     }
 
+    override fun toString(): String {
+        return "Home"
+    }
 }

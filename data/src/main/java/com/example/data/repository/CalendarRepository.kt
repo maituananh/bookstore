@@ -28,23 +28,17 @@ class CalendarRepository
 
         val jobListRes: List<Job> = calendarListRes.flatMap { it.jobs }.toList()
 
-        val jobMap: Map<Int, JobEntity> = providesJobDao.getAllJobs().associateBy { it.id!! }
+        val jobMap: Map<Int, JobEntity> = providesJobDao.getAllJobs().associateBy { it.jobId }
 
         jobListRes.map {
-            if (jobMap.get(it.id) != null) {
-                it.isSelected = jobMap.get(it.id)!!.isSelected
+            if (jobMap[it.id] != null) {
+                it.isSelected = jobMap[it.id]!!.isSelected
             } else {
                 it.isSelected = false
             }
         }
 
         emit(calendarListRes)
-    }
-
-
-    override suspend fun insertJobToDB(job: Job) {
-        val jobEntity = JobEntity(null, job.id, true)
-        providesJobDao.insertJob(jobEntity)
     }
 
     override suspend fun updateIsSelected(job: Job) {

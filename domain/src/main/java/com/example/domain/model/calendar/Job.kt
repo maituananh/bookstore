@@ -1,6 +1,6 @@
 package com.example.domain.model.calendar
 
-class Job(
+data class Job(
     val id: Int,
     val name: String,
     val status: JobStatus,

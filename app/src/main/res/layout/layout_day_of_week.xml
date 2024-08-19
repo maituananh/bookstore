@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:minHeight="105dp"
         android:layout_height="105dp"
-        android:background="@drawable/border_color"
+        android:background="@drawable/border_color_day_of_week"
         android:orientation="vertical"
         android:paddingBottom="2dip">
 

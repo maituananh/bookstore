@@ -16,10 +16,10 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeGridViewBinding
 
-    private val fragmentsMap : Map<Int, Pair<String, Fragment>> = mapOf(
-        0 to Pair("Home", HomeFragment()),
-        1 to Pair("Search", SearchFragment()),
-        2 to Pair("Calendar", CalendarOfWeekFragment())
+    private val homeFragments: List<Fragment> = listOf(
+        HomeFragment(),
+        SearchFragment(),
+        CalendarOfWeekFragment()
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +27,10 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeGridViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.vp2.adapter = PagerAdapter(fragmentsMap, supportFragmentManager, lifecycle)
+        binding.vp2.adapter = PagerAdapter(homeFragments, supportFragmentManager, lifecycle)
 
         TabLayoutMediator(binding.tlMenu, binding.vp2) { tab, position ->
-            tab.text = fragmentsMap[position]!!.first
+            tab.text = homeFragments[position].toString()
         }.attach()
 
         binding.textViewHome.text = intent.getStringExtra("username")

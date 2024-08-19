@@ -8,7 +8,7 @@
     android:layout_marginStart="5dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="@color/c_f7f8fc"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="15dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,6 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="13dp"
                 android:gravity="bottom|left"
-                android:text="Legs day"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -66,12 +65,20 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/img_tick_completed"
+                android:id="@+id/img_not_completed_icon"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/completed_icon"
-                android:tag="false" />
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_completed_icon"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/completed_icon_purple"
+                android:visibility="gone" />
 
         </LinearLayout>
 

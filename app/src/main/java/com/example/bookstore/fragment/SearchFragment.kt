@@ -23,10 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search), IRecyclerAction<Book> {
 
-    companion object {
-        const val EXTRA_ISBN_1: String = "isbn13"
-    }
-
     private lateinit var binding: FragmentSearchBinding
     val searchViewModel: SearchViewModel by viewModels<SearchViewModel>()
 
@@ -91,5 +87,9 @@ class SearchFragment : Fragment(R.layout.fragment_search), IRecyclerAction<Book>
                 this.findViewById(R.id.image_book)
             )
         }
+    }
+
+    override fun toString(): String {
+        return "Search"
     }
 }

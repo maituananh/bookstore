@@ -6,16 +6,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class PagerAdapter(
-    private val fragmentsMap: Map<Int, Pair<String, Fragment>>,
+    private val fragments: List<Fragment>,
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
-        return fragmentsMap.size
+        return fragments.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return fragmentsMap[position]!!.second
+        return fragments[position]
     }
 }

@@ -1,6 +1,5 @@
 package com.example.bookstore.fragment.action
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.widget.LinearLayout
@@ -29,6 +28,11 @@ class ActionOnCalendarOfWeek
     private lateinit var rvJob: RecyclerView
     private lateinit var txtDayOfWeek: TextView
     private lateinit var txtDayOfMonth: TextView
+
+    companion object {
+        const val START_NAME_OF_DAY: Int = 0
+        const val END_NAME_OF_DAY: Int = 3
+    }
 
     override fun onClick(t: Calendar) {
         TODO("Not yet implemented")
@@ -76,17 +80,17 @@ class ActionOnCalendarOfWeek
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTextAndColorForDayOfWeekAndOfMonth(calendar: Calendar) {
         calendar.date?.let {
-            txtDayOfWeek.text = it.dayOfWeek.toString().substring(0, 3)
+            txtDayOfWeek.text =
+                it.dayOfWeek.toString().substring(START_NAME_OF_DAY, END_NAME_OF_DAY)
             txtDayOfMonth.text = it.dayOfMonth.toString()
         }
 
         if (calendar.date!!.isEqual(LocalDate.now())) {
-            txtDayOfWeek.setTextColor(context.colorList(R.color.c_7470ef))
-            txtDayOfMonth.setTextColor(context.colorList(R.color.c_7470ef))
+            txtDayOfWeek.setTextColor(context.colorList(R.color.purple))
+            txtDayOfMonth.setTextColor(context.colorList(R.color.purple))
         }
     }
 }

@@ -11,15 +11,17 @@ import javax.inject.Inject
 class BookRepository
 @Inject constructor(@ItBookApi private val provideRetrofit: Retrofit) : IBookRepository {
 
+    private val itBookServer = provideRetrofit.create(ItBookServer::class.java)
+
     override suspend fun findBooks(text: String): List<Book> {
-        return provideRetrofit.create(ItBookServer::class.java).search(text).body()!!.toBookList()
+        return itBookServer.search(text).body()!!.toBookList()
     }
 
     override suspend fun findNewBooks(): List<Book> {
-        return provideRetrofit.create(ItBookServer::class.java).new().body()!!.toBookList()
+        return itBookServer.new().body()!!.toBookList()
     }
 
     override suspend fun findById(id: String): BookDetail {
-        return provideRetrofit.create(ItBookServer::class.java).getByIsbn13(id).body()!!.toBookDetail()
+        return itBookServer.getByIsbn13(id).body()!!.toBookDetail()
     }
 }
