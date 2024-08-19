@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookstore.common.util.SetImageResource
 import com.example.bookstore.databinding.ActivityDetailBinding
+import com.example.bookstore.fragment.EXTRA_ISBN_1
 import com.example.bookstore.view_model.BookDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,7 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val isbn13: String = intent.getStringExtra("isbn13") ?: "new"
+        val isbn13: String = intent.getStringExtra(EXTRA_ISBN_1) ?: "new"
 
         bookDetailViewModel.findById(isbn13)
         bookDetailViewModel.bookDetail.observe(this) {

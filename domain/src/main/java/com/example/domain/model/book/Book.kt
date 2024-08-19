@@ -1,6 +1,6 @@
 package com.example.domain.model.book
 
-class Book(
+data class Book(
     val title: String,
     val subtitle: String,
     val isbn13: String,
